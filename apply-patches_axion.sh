@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-CHECK_FAIL(){ [[ -d ".git/rebase-apply" ]] && git am --abort }
+CHECK_FAIL(){ [[ -d ".git/rebase-apply" ]] && git am --abort; }
 
 PATCH_DIR="$(pwd)/rom_patches"
 DT_DIR="$1"
