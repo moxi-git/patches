@@ -1,35 +1,29 @@
 #!/bin/bash
+
 set -e
 
-CHECK_FAIL(){ [[ -d ".git/rebase-apply" ]] && git am --abort; }
+# move patches to expected dirs
+mv "/home/moxi/patches/rom_patches/Axion/0001-made-for-axionasop-mk-files-and-fixed-overlay.patch" "/home/moxi/my-roms/axion/device/samsung/a53x/"
+mv "/home/moxi/patches/rom_patches/Axion/0002-modified-genfs_contexts-to-work-with-axionAOSP.patch" "/home/moxi/my-roms/axion/device/samsung/s5e8825-common/sepolicy/vendor/"
 
-PATCH_DIR="$(pwd)/rom_patches"
-DT_DIR="$1"
+cd "/home/moxi/my-roms/axion/device/samsung/a53x/"
 
-if [[ -z "$1" ]]; then
-    echo "Usage: [dt_dirs]"
-    exit 1
+if [ -d ".git/rebase-apply" ]; then
+    echo "abort"
+    git am --abort
 fi
 
-A53X_PATCHES=( "0001-made-for-axionasop-mk-files-and-fixed-overlay" )
-S5E8825_PATCHES=( "0002-modified-genfs_contexts-to-work-with-axionAOSP" )
+echo "apply 0001-made-for-axionasop-mk-files-and-fixed-overlay.patch | patch"
+git am 0001-made-for-axionasop-mk-files-and-fixed-overlay.patch
 
-(
-cd "$1/a53x"
+sleep 1
 
-CHECK_FAIL
+cd "/home/moxi/my-roms/axion/device/samsung/s5e8825-common/sepolicy/vendor"
 
-for i in "${A53X_PATCHES[@]}"; do
-    git am --rej "$PATCH_DIR/$i.patch"
-done
-)
+if [ -d ".git/rebase-apply" ]; then
+    echo "abort"
+    git am --abort
+fi
 
-(
-cd "$1/s5e8825-common"
-
-CHECK_FAIL
-
-for i in "${S5E8825_PATCHES[@]}"; do
-    git am --rej "$PATCH_DIR/$i.patch"
-done
-)
+echo "apply 0002-modified-genfs_contexts-to-work-with-axionAOSP.patch | patch"
+git am 0002-modified-genfs_contexts-to-work-with-axionAOSP.patch
