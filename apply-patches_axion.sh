@@ -27,3 +27,14 @@ fi
 
 echo "apply 0002-modified-genfs_contexts-to-work-with-axionAOSP.patch | patch"
 git am 0002-modified-genfs_contexts-to-work-with-axionAOSP.patch
+
+sleep 1
+echo "deleting applied patches..."
+
+echo "removing ~/my-roms/axion/device/samsung/a53x/0001-made-for-axionasop-mk-files-and-fixed-overlay.patch"
+rm -rf ~/my-roms/axion/device/samsung/a53x/0001-made-for-axionasop-mk-files-and-fixed-overlay.patch
+
+sleep 1
+
+echo "removing ~/my-roms/axion/device/samsung/s5e8825-common/sepolicy/vendor/0002-modified-genfs_contexts-to-work-with-axionAOSP.patch"
+rm -rf ~/my-roms/axion/device/samsung/s5e8825-common/sepolicy/vendor/0002-modified-genfs_contexts-to-work-with-axionAOSP.patch
